@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package ext;
-option go_package = "github.com/995933447/mconfigcenter/ext";
+option go_package = "github.com/995933447/memcache/ext";
 
 import "google/protobuf/descriptor.proto";
 
