@@ -4,6 +4,7 @@ import (
 	"sync"
 
 	"github.com/995933447/easymicro/loader"
+	"github.com/995933447/mconfigcenter/configcenter"
 	"github.com/995933447/memcache/memcache"
 )
 
@@ -87,8 +88,14 @@ func LoadConfig() error {
 		return err
 	}
 
-	if err = loader.LoadAndWatchMongoFromLocal(); err != nil {
-		return err
+	var enabledMongo bool
+	SafeReadServerConfig(func(c *ServerConfig) {
+		enabledMongo = c.EnabledMconfigcenter && c.MconfigcenterKVConfigDataSrc == int(configcenter.KVConfigDataSrcLocalImage)
+	})
+	if enabledMongo {
+		if err = loader.LoadAndWatchMongoFromLocal(); err != nil {
+			return err
+		}
 	}
 
 	return nil
