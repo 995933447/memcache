@@ -1,0 +1,12 @@
+{
+  "discoveries": {
+    "memcache": {
+      "discover_key_prefix": "easymicro_example",
+      "discovery": "etcd",
+      "etcd": {
+        "connect_timeout_ms":5000,
+        "connection": "default"
+      }
+    }
+  }
+}
