@@ -7,7 +7,7 @@
 package memcache
 
 import (
-	_ "github.com/995933447/memcache/ext"
+	_ "github.com/995933447/easymicro/pb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -339,7 +339,7 @@ var File_memcache_proto protoreflect.FileDescriptor
 
 const file_memcache_proto_rawDesc = "" +
 	"\n" +
-	"\x0ememcache.proto\x12\bmemcache\x1a\text.proto\"\x1a\n" +
+	"\x0ememcache.proto\x12\bmemcache\x1a\x13easymicro_ext.proto\"\x1a\n" +
 	"\x06GetReq\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\"/\n" +
 	"\aGetResp\x12\x14\n" +
@@ -360,7 +360,7 @@ const file_memcache_proto_rawDesc = "" +
 	"\bMemCache\x12*\n" +
 	"\x03Get\x12\x10.memcache.GetReq\x1a\x11.memcache.GetResp\x12*\n" +
 	"\x03Set\x12\x10.memcache.SetReq\x1a\x11.memcache.SetResp\x12*\n" +
-	"\x03Del\x12\x10.memcache.DelReq\x1a\x11.memcache.DelRespBG\x8a\x9d \x1b \x01@\x01Z\bmemcacheb\bmemcache\x88\x01\x01Z&github.com/995933447/memcache/memcacheb\x06proto3"
+	"\x03Del\x12\x10.memcache.DelReq\x1a\x11.memcache.DelRespBL\x8a\x9d \x1b \x01@\x01Z\bmemcacheb\bmemcache\x88\x01\x01Z+github.com/995933447/mconfigcenter/memcacheb\x06proto3"
 
 var (
 	file_memcache_proto_rawDescOnce sync.Once
