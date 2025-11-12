@@ -7,7 +7,7 @@
 package memcache
 
 import (
-	_ "github.com/995933447/mconfigcenter/ext"
+	_ "github.com/995933447/memcache/ext"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
