@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package ext;
+option go_package = "github.com/995933447/mconfigcenter/ext";
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.FileOptions {
+  ProtoGenOpts proto_gen_opts = 66001; // 代码自动生成的扩展
+}
+
+extend google.protobuf.MessageOptions {
+  JsonSchemaOutputOpts json_schema_output_opts = 66001;
+}
+
+message JsonSchemaOutputOpts {
+  bool enabled_reference = 1; // 设置为true则github.com/invopop/jsonschema.DoNotReference为false,默认DoNotReference为true
+  bool disabled_additional_properties = 2; // 设置为true则github.com/invopop/jsonschema.AllowAdditionalProperties为false,默认为true
+  bool disabled_require_from_json_schema_tags = 3; // 设置为true则github.com/invopop/jsonschema.RequiredFromJSONSchemaTags为false,默认为true
+  string field_name_tag = 4; // 设置github.com/invopop/jsonschema.FieldNameTag
+}
+
+message ProtoGenOpts {
+  string server_package = 1; // 服务端包名，不指定则使用go_option报名加server后缀作为默认包名
+  bool disabled_load_fastlog = 2; // 是否禁用生成自动从本地加载fastlog
+  bool disabled_load_mongo = 3; // 是否禁用生成自动从本地加载mongo
+  bool disabled_load_redis = 4; // 是否禁用生成自动从本地加载redis
+  bool disabled_load_etcd = 5; // 是否禁用生成自动从本地加载etcd
+  bool disabled_load_discovery = 6; // 是否禁用生成自动从本地加载默认的服务发现
+  bool disabled_load_nats = 7; // 是否禁用生成自动从本地加载nats
+  bool disabled_elect = 8; // 是否禁用自动选举
+  string elect_driver_name = 9; // 选举器使用的驱动名称
+  string elect_driver_conn = 10; // 选举器使用的驱动连接
+  string grpc_schema = 11; // 指定grpc解析器协议, 默认是easymicro
+  string discovery_name = 12; // 指定服务发现，默认是default
+  bool enabled_health = 13; // 是否启用easymicro内置的服务健康检查
+  bool auto_go_mod_client = 14; // 是否在客户端输出代码目录下自动生go.mod
+  bool auto_go_mod_server = 15; // 是否自动服务端输出代码目录下自动生成go.mod
+  string mgorm_redis_cache_conn = 16; // mgorm redis 缓存 的Redis 连接名称
+  bool disabled_mgorm_redis_cache_conn = 17;   // 是否禁用 mgorm Redis 缓存
+  bool disabled_fastlog_mgorm_query = 18;   // 是否禁用 Fastlog Mgorm 查询日志
+}
+
+extend google.protobuf.EnumOptions {
+  bool is_rpc_port = 66001; // 用于在proto中指定和维护服务的rpc 端口
+}
