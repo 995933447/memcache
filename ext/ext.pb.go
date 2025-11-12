@@ -348,7 +348,7 @@ const file_ext_proto_rawDesc = "" +
 	"\x1cdisabled_fastlog_mgorm_query\x18\x12 \x01(\bR\x19disabledFastlogMgormQuery:W\n" +
 	"\x0eproto_gen_opts\x12\x1c.google.protobuf.FileOptions\x18у\x04 \x01(\v2\x11.ext.ProtoGenOptsR\fprotoGenOpts:s\n" +
 	"\x17json_schema_output_opts\x12\x1f.google.protobuf.MessageOptions\x18у\x04 \x01(\v2\x19.ext.JsonSchemaOutputOptsR\x14jsonSchemaOutputOpts:>\n" +
-	"\vis_rpc_port\x12\x1c.google.protobuf.EnumOptions\x18у\x04 \x01(\bR\tisRpcPortB(Z&github.com/995933447/mconfigcenter/extb\x06proto3"
+	"\vis_rpc_port\x12\x1c.google.protobuf.EnumOptions\x18у\x04 \x01(\bR\tisRpcPortB#Z!github.com/995933447/memcache/extb\x06proto3"
 
 var (
 	file_ext_proto_rawDescOnce sync.Once
