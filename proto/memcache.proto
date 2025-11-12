@@ -1,11 +1,11 @@
 syntax = "proto3";
 
 package memcache;
-option go_package = "github.com/995933447/memcache/memcache";
+option go_package = "github.com/995933447/mconfigcenter/memcache";
 
-import "ext.proto";
+import "easymicro_ext.proto";
 
-option (ext.proto_gen_opts) = {
+option (easymicro_ext.proto_gen_opts) = {
   disabled_load_redis:true
   disabled_elect:true
   disabled_mgorm_redis_cache_conn:true
