@@ -1,0 +1,10 @@
+{
+	"sample_pprof_time_long_sec": 20,
+	"env": "dev",
+    "enabled_mconfigcenter": false,
+    "mconfigcenter_kv_config_data_src": false,
+    "mconfigcenter_listener_group": false,
+    "mconfigcenter_config_key": "memcache",
+    "mconfigcenter_local_img_mgo_conn": "default",
+    "mconfigcenter_local_img_mgo_db": "confighub"
+}
