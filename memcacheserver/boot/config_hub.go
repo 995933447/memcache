@@ -2,7 +2,6 @@ package boot
 
 import (
 	"github.com/995933447/mconfigcenter/configcenter"
-	"github.com/995933447/memcache/memcache"
 	"github.com/995933447/memcache/memcacheserver/config"
 	"github.com/995933447/memcache/memcacheserver/confighub"
 )
@@ -18,7 +17,7 @@ func InitConfigHub() error {
 		return nil
 	}
 
-	err := configcenter.InitReconfmgrReloader(memcache.EasymicroGRPCPbServiceNameMemCache, listenerGroup)
+	err := configcenter.InitReconfmgrReloader(listenerGroup)
 	if err != nil {
 		return err
 	}
