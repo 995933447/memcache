@@ -1,0 +1,17 @@
+{
+  "discoveries": {
+    "memcache": {
+      "discover_key_prefix": "easymicro_example",
+      "discovery": "etcd",
+      "debug_local_proxy": {
+        "proxy_for": "etcd",
+        "dir": "/var/work/discovery"
+      },
+      "etcd": {
+        "connect_timeout_ms":5000,
+        "connection": "default"
+      }
+    }
+  }
+}
+

@@ -1,0 +1,10 @@
+{
+  "file": {
+    "default_log_dir": "/var/work/easymicro-example/log",
+    "bill_log_dir":"/var/work/easymicro-example/bill",
+    "stat_log_dir": "/var/work/easymicro-example/stat",
+    "log_debug_before_file_size_bytes": -1,
+    "log_info_before_file_size_bytes": -1
+  },
+  "alert_level": "WARN"
+}
