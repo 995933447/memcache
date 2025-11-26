@@ -15,7 +15,6 @@ import (
 
 func TestGetValue(t *testing.T) {
 	InitEnv()
-
 	key := "foofghjktyu34567889"
 	err := memcache.SetValue(context.Background(), key, "dddpoiuytyubar2222")
 	if err != nil {

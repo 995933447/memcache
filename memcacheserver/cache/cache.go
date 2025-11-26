@@ -18,10 +18,6 @@ var (
 	GtMyHashLastHot = &sync.Map{} // 上一轮周期因为key的hash比最后一个节点更靠后而落在第一个节点的热key
 )
 
-type Item struct {
-	Value interface{}
-}
-
 func init() {
 	runtimeutil.Go(func() {
 		tk := time.NewTicker(time.Minute * 30)
@@ -81,71 +77,6 @@ func calcCachedBytes() uint64 {
 	return runtimeutil.GetCurrMemory()
 }
 
-func calcCachedBytesOnlyKv() uint64 {
-	var bytes uint64
-
-	Hot.Range(func(k, v interface{}) bool {
-		item := v.(*Item)
-		key := k.(string)
-		bytes += uint64(len(key))
-		if item != nil && item.Value != nil {
-			if value, ok := item.Value.(string); ok {
-				bytes += uint64(len(value))
-			}
-		}
-		bytes += 8
-		return true
-	})
-
-	LastHot.Range(func(k, v interface{}) bool {
-		key := k.(string)
-		bytes += uint64(len(key))
-		if _, ok := Hot.Load(key); ok {
-			return true
-		}
-
-		item := v.(*Item)
-		if item != nil && item.Value != nil {
-			if value, ok := item.Value.(string); ok {
-				bytes += uint64(len(value))
-			}
-		}
-		bytes += 8
-		return true
-	})
-
-	GtMyHashHot.Range(func(k, v interface{}) bool {
-		item := v.(*Item)
-		key := k.(string)
-		bytes += uint64(len(key))
-		if item != nil && item.Value != nil {
-			if value, ok := item.Value.(string); ok {
-				bytes += uint64(len(value))
-			}
-		}
-		bytes += 8
-		return true
-	})
-
-	GtMyHashLastHot.Range(func(k, v interface{}) bool {
-		key := k.(string)
-		bytes += uint64(len(key))
-		if _, ok := GtMyHashHot.Load(key); ok {
-			return true
-		}
-
-		item := v.(*Item)
-		if item != nil && item.Value != nil {
-			if value, ok := item.Value.(string); ok {
-				bytes += uint64(len(value))
-			}
-		}
-		return true
-	})
-
-	return bytes
-}
-
 func gcNoHotKey() {
 	LastHot = Hot
 	Hot = &sync.Map{}
@@ -166,46 +97,41 @@ func getStore(hash uint64) (*sync.Map, *sync.Map) {
 	return hot, lastHot
 }
 
-func Get(key string, hash uint64) (*Item, bool) {
+func Get(key string, hash uint64) (string, bool) {
 	if IsForbiddenKey(key, hash) {
-		return nil, false
+		return "", false
 	}
 
 	hot, lastHot := getStore(hash)
-	item, ok := hot.Load(key)
+	value, ok := hot.Load(key)
 	if !ok {
 		// 当轮热key中没有，尝试从上一轮的热key中加载
-		item, ok = lastHot.Load(key)
+		value, ok = lastHot.Load(key)
 		if ok {
 			// 缓存到当轮热key
-			hot.Store(key, item)
+			value, _ = hot.LoadOrStore(key, value)
 		}
 	}
+
 	if !ok {
-		return nil, false
+		return "", false
 	}
-	return item.(*Item), ok
+
+	return value.(string), ok
 }
 
-func Set(key string, hash uint64, value interface{}) {
+func Set(key string, hash uint64, value string) {
 	if IsForbiddenKey(key, hash) {
 		return
 	}
 
-	item, ok := Get(key, hash)
-	if !ok && !isForbiddenInsert {
-		hot, _ := getStore(hash)
-		item = &Item{
-			Value: value,
-		}
-		itemAny, ok := hot.LoadOrStore(key, item)
-		if ok {
-			item = itemAny.(*Item)
-		}
+	_, ok := Get(key, hash)
+	if !ok && isForbiddenInsert {
+		return
 	}
-	if item != nil {
-		item.Value = value
-	}
+
+	hot, _ := getStore(hash)
+	hot.Store(key, value)
 }
 
 func Del(key string, hash uint64) {

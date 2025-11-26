@@ -29,17 +29,13 @@ func (s *MemCache) Get(ctx context.Context, req *memcache.GetReq) (*memcache.Get
 		return nil, err
 	}
 
-	item, ok := cache.Get(req.Key, hash)
+	value, ok := cache.Get(req.Key, hash)
 	if !ok {
 		return &resp, nil
 	}
 
 	resp.Ok = true
-	if s, ok := item.Value.(string); ok {
-		resp.Value = s
-	} else {
-		fastlog.Warnf("get key:%s, val:%+v is not string", req.Key, item.Value)
-	}
+	resp.Value = value
 
 	return &resp, nil
 }
